@@ -13,3 +13,6 @@ Style/Documentation:
 
 Gemspec/RequiredRubyVersion:
   Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false

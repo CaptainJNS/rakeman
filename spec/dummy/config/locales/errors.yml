@@ -1,0 +1,4 @@
+en:
+  errors:
+    validation:
+      name_format: Wrong name format!

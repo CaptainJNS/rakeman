@@ -37,13 +37,13 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec-rails', '~> 4.0', '>= 4.0.1'
 
   # Linters
-  spec.add_development_dependency 'rubocop', '~> 1.2'
-  spec.add_development_dependency 'rubocop-rails', '~> 2.8', '>= 2.8.1'
-  spec.add_development_dependency 'rubocop-rspec', '~> 2.0'
   spec.add_development_dependency 'capybara', '~> 3.32', '>= 3.32.1'
-  spec.add_development_dependency 'selenium-webdriver', '~> 3.142', '>= 3.142.7'
   spec.add_development_dependency 'factory_bot_rails', '~> 5.1', '>= 5.1.1'
   spec.add_development_dependency 'faker', '~> 2.11'
   spec.add_development_dependency 'pry-rails', '~> 0.3.9'
+  spec.add_development_dependency 'rubocop', '~> 1.2'
+  spec.add_development_dependency 'rubocop-rails', '~> 2.8', '>= 2.8.1'
+  spec.add_development_dependency 'rubocop-rspec', '~> 2.0'
+  spec.add_development_dependency 'selenium-webdriver', '~> 3.142', '>= 3.142.7'
   spec.add_development_dependency 'shoulda-matchers', '~> 4.3'
 end

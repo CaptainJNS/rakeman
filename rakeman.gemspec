@@ -30,7 +30,13 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'rails', '>= 5.1.5'
   spec.add_dependency 'rake', '~> 12.0'
 
+  # Database
+  spec.add_development_dependency 'pg', '~> 1.2', '>= 1.2.3'
+
+  # Tests
   spec.add_development_dependency 'rspec-rails', '~> 4.0', '>= 4.0.1'
+
+  # Linters
   spec.add_development_dependency 'rubocop', '~> 1.2'
   spec.add_development_dependency 'rubocop-rails', '~> 2.8', '>= 2.8.1'
   spec.add_development_dependency 'rubocop-rspec', '~> 2.0'

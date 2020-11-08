@@ -5,7 +5,7 @@ module Rakeman::TaskCreator
   DESC_REGEX = /# ([\w\W]+)/.freeze
   MATCH_INDEX = 1
 
-  def create_tasks(tasks_list: nil, destroy_old_tasks: true)
+  def persist_tasks(tasks_list: nil, destroy_old_tasks: true)
     Rakeman::RakeTask.destroy_all if destroy_old_tasks
 
     tasks_list ||= tasks

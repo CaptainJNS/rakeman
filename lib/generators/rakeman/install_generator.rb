@@ -10,13 +10,9 @@ module Rakeman
       copy_file 'initializer.rb', 'config/initializers/rakeman.rb'
     end
 
-    def copy_sitemap_config
-      copy_file 'rakeman.rb', 'config/rakeman.rb'
-    end
-
     def setup_routes
       route <<-ROUTE
-        mount Rakeman::Engine => '/'
+        mount Rakeman::Engine => '/rakeman'
       ROUTE
     end
   end

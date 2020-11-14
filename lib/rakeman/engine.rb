@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
+require 'rake'
+
 module Rakeman
   class Engine < ::Rails::Engine
+
     isolate_namespace Rakeman
 
     config.autoload_paths += [Rakeman::Engine.root.join('config', 'initializers')]
@@ -25,5 +28,7 @@ module Rakeman
         ::ActionController::Base.helper Rakeman::Engine.helpers
       end
     end
+
+    Rake::TaskManager.record_task_metadata = true
   end
 end

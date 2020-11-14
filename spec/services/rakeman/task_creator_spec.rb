@@ -3,14 +3,15 @@
 RSpec.describe Rakeman::Manager do
   let(:manager) { described_class.new }
 
-  let(:unparsed_list) do
-    "rake task1            # Task 1 Description
-      rake task2            # Task 2 Description
-      rake task3          # Task 3 Description"
+  let(:task1) { instance_double('task', name: 'task1', full_comment: 'Task 1 Description', arg_names: []) }
+  let(:task2) { instance_double('task', name: 'task2', full_comment: 'Task 2 Description', arg_names: []) }
+  let(:task3) do
+    instance_double('task', name: 'task3', full_comment: 'Task 3 Description', arg_names: %w[arg1 arg2])
   end
+  let(:unparsed_list) { [task1, task2, task3] }
 
   before do
-    allow(manager).to receive(:`).with('rake -T').and_return(unparsed_list)
+    allow(Rake::Task).to receive(:tasks).and_return(unparsed_list)
   end
 
   describe '#all_tasks_list' do
@@ -18,22 +19,25 @@ RSpec.describe Rakeman::Manager do
       [
         {
           name: 'task1',
-          description: 'Task 1 Description'
+          description: 'Task 1 Description',
+          args: []
         },
         {
           name: 'task2',
-          description: 'Task 2 Description'
+          description: 'Task 2 Description',
+          args: []
         },
         {
           name: 'task3',
-          description: 'Task 3 Description'
+          description: 'Task 3 Description',
+          args: %w[arg1 arg2]
         }
       ]
     end
 
     it 'gets list of all rake tasks' do
       manager.all_tasks_list
-      expect(manager).to have_received(:`).with('rake -T')
+      expect(Rake::Task).to have_received(:tasks)
     end
 
     it 'parses task list to array of hashes' do
@@ -44,8 +48,12 @@ RSpec.describe Rakeman::Manager do
 
   describe '#persist_tasks' do
     context 'when no tasks exist yet' do
-      it 'creates rake_tasks' do
-        expect { manager.persist_tasks }.to change(Rakeman::RakeTask, :count).from(0).to(3)
+      it 'creates rake_tasks and task_parameters' do
+        expect { manager.persist_tasks }
+          .to change(Rakeman::RakeTask, :count)
+          .from(0).to(3)
+          .and change(Rakeman::TaskParameter, :count)
+          .from(0).to(2)
       end
     end
 
@@ -80,7 +88,8 @@ RSpec.describe Rakeman::Manager do
       let(:tasks_list) do
         [
           {
-            name: task_name
+            name: task_name,
+            args: []
           }
         ]
       end

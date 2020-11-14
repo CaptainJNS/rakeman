@@ -22,7 +22,7 @@ RSpec.describe Rakeman::Manager do
   describe '#update_list' do
     let(:new_description1) { Faker::Lorem.sentence }
     let(:new_description2) { Faker::Lorem.sentence }
-    let(:new_task_name) { Faker::Lorem.word }
+    let(:new_task_name) { Faker::Lorem.unique.word }
 
     let!(:task1) { create(:rake_task, done: true) }
     let!(:task2) { create(:rake_task) }
@@ -31,7 +31,7 @@ RSpec.describe Rakeman::Manager do
     let(:unparsed_list) do
       "rake #{task1.name}            # #{new_description1}
         rake #{task2.name}            # #{new_description2}
-        rake #{Faker::Lorem.word}          # #{Faker::Lorem.sentence}"
+        rake #{Faker::Lorem.unique.word}          # #{Faker::Lorem.sentence}"
     end
 
     before do

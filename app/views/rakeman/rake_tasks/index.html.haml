@@ -1,9 +1,9 @@
-=link_to('Update tasks list', update_tasks_list_path)
+=link_to(t('rakeman.tasks.actions.update_list'), update_tasks_list_path)
 %table{border: 1}
   %thead
     %tr
-      - %w[Task Description Done Actions].each do |header|
-        %td= header
+      - t('rakeman.tasks.columns').each_value do |column_name|
+        %td= column_name
   %tbody
     - @tasks.each do |task|
       %tr
@@ -13,7 +13,7 @@
         %td
           .table_actions
             -if task.done?
-              = link_to('Mark as undone', mark_as_undone_path(task))
+              = link_to(t('rakeman.tasks.actions.mark_as_undone'), mark_as_undone_path(task))
             -else
-              = link_to('Mark as done', mark_as_done_path(task))
-              = link_to('Run task', execute_task_path(task))
+              = link_to(t('rakeman.tasks.actions.mark_as_done'), mark_as_done_path(task))
+              = link_to(t('rakeman.tasks.actions.execute'), execute_task_path(task))

@@ -5,7 +5,6 @@ module Rakeman
     isolate_namespace Rakeman
 
     config.autoload_paths += [Rakeman::Engine.root.join('config', 'initializers')]
-    config.i18n.load_path += Dir['config/locales/rakeman/**/*.yml']
 
     config.generators do |g|
       g.test_framework :rspec, fixture: false
@@ -25,5 +24,7 @@ module Rakeman
         ::ActionController::Base.helper Rakeman::Engine.helpers
       end
     end
+
+    config.i18n.load_path += Dir["#{config.root}/config/locales/**/*.yml"]
   end
 end

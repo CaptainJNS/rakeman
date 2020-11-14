@@ -1,7 +1,1 @@
 en:
-  actions:
-    tasks:
-      marked_as_done: Task has been marked as done
-      marked_as_undone: Task has been marked as undone
-      executed: Task has been successfully executed and marked as done
-      list_updated: Tasks list has been updated

@@ -13,7 +13,7 @@ RSpec.describe Rakeman::Manager do
     allow(manager).to receive(:`).with('rake -T').and_return(unparsed_list)
   end
 
-  describe '#tasks' do
+  describe '#all_tasks_list' do
     let(:expected_list) do
       [
         {
@@ -32,12 +32,12 @@ RSpec.describe Rakeman::Manager do
     end
 
     it 'gets list of all rake tasks' do
-      manager.tasks
+      manager.all_tasks_list
       expect(manager).to have_received(:`).with('rake -T')
     end
 
     it 'parses task list to array of hashes' do
-      expect(manager.tasks)
+      expect(manager.all_tasks_list)
         .to match_array(expected_list)
     end
   end

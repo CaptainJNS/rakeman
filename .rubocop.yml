@@ -30,3 +30,6 @@ RSpec/MultipleMemoizedHelpers:
 
 RSpec/ExampleLength:
   Enabled: false
+
+Rails/InverseOf:
+  Enabled: false

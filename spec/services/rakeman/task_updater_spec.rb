@@ -28,14 +28,24 @@ RSpec.describe Rakeman::Manager do
     let!(:task2) { create(:rake_task) }
     let!(:task3) { create(:rake_task) }
 
-    let(:unparsed_list) do
-      "rake #{task1.name}            # #{new_description1}
-        rake #{task2.name}            # #{new_description2}
-        rake #{Faker::Lorem.unique.word}          # #{Faker::Lorem.sentence}"
+    let(:task_double1) do
+      instance_double('task', name: task1.name, full_comment: new_description1, arg_names: [])
     end
+    let(:task_double2) do
+      instance_double('task', name: task2.name, full_comment: new_description2, arg_names: [])
+    end
+    let(:task_double3) do
+      instance_double(
+        'task',
+        name: Faker::Lorem.unique.word,
+        full_comment: Faker::Lorem.sentence,
+        arg_names: []
+      )
+    end
+    let(:unparsed_list) { [task_double1, task_double2, task_double3] }
 
     before do
-      allow(manager).to receive(:`).with('rake -T').and_return(unparsed_list)
+      allow(Rake::Task).to receive(:tasks).and_return(unparsed_list)
     end
 
     it 'updates tasks description and saves tasks state' do

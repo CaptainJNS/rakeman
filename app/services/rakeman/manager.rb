@@ -6,8 +6,8 @@ module Rakeman
     include TaskUpdater
     include TaskRunner
 
-    def execute(task)
-      run(task.name)
+    def execute(task, params = nil)
+      run(task.name, params)
       mark_as_done(task)
     end
 

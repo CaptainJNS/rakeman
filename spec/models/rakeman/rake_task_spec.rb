@@ -11,4 +11,8 @@ RSpec.describe Rakeman::RakeTask, type: :model do
     it { is_expected.to allow_value('namespace1:namespace2:task_name[param1,param2]').for(:name) }
     it { is_expected.not_to allow_value('&& rm -rf *').for(:name).with_message('Wrong name format!') }
   end
+
+  describe 'Associations' do
+    it { is_expected.to have_many(:params).dependent(:destroy) }
+  end
 end

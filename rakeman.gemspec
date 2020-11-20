@@ -45,4 +45,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rubocop-rspec', '~> 2.0'
   spec.add_development_dependency 'selenium-webdriver', '~> 3.142', '>= 3.142.7'
   spec.add_development_dependency 'shoulda-matchers', '~> 4.3'
+
+  # HTML preprocessors
+  spec.add_development_dependency 'haml', '~> 5.1', '>= 5.1.1'
+  spec.add_development_dependency 'haml-rails', '~> 2.0', '>= 2.0.1'
 end

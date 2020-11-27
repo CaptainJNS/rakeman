@@ -17,7 +17,7 @@ RSpec.describe Rakeman::Manager do
 
       it 'executes rake task' do
         manager.execute(task, params)
-        expect(application_spy).to have_received(:invoke_task).with("#{task.name}[#{params.join(' ')}]")
+        expect(application_spy).to have_received(:invoke_task).with("#{task.name}[#{params.join(',')}]")
       end
 
       it 'updates task to done' do

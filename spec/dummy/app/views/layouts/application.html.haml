@@ -1,0 +1,15 @@
+!!!
+%html
+  %head
+    %title= Rakeman
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag "rakeman/application", media: "all"
+
+  %body
+    - if notice
+      %p.alert.alert-success= notice
+    - if alert
+      %p.alert.alert-danger= alert
+
+    = yield

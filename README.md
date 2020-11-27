@@ -46,7 +46,8 @@ Create an instance of `Rakeman::Manager` and call on it:
  - `#update_tasks_list` to update DB with new tasks and destroy old ones that you don't have in project anymore.
  - `#mark_as_done(task)` to mark your task as done
  - `#mark_as_undone(task)` to mark your task as undone
- - `#execute(task)` to execute your task. It also marks your task as done
+ - `#execute(task)` to execute your task. It also marks your task as done<br>
+ <span style="color:red">Only rake tasks without params can be executed. Feature that allows to run tasks with params will be released in next version. Sorry =(</span>
 
 ## Contributing
 

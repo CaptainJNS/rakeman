@@ -6,7 +6,7 @@ class Rakeman::RakeTasksController < ApplicationController
   def index
     manager.persist_tasks unless Rakeman::RakeTask.any?
 
-    @tasks = Rakeman::RakeTask.order(:name)
+    @tasks = Rakeman::RakeTask.includes(:params).order(:name)
     render 'index', layout: 'layouts/rakeman/application.html.haml'
   end
 
@@ -23,7 +23,7 @@ class Rakeman::RakeTasksController < ApplicationController
   end
 
   def execute
-    manager.execute(task)
+    Rakeman::WEB::Tasks::Run.call(task, params, manager)
 
     redirect t('rakeman.tasks.events.executed')
   end

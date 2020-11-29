@@ -1,0 +1,23 @@
+.modal.fade{tabindex: -1, id: "rake-tasks-modal-#{task.id}"}
+  .modal-dialog
+    .modal-content
+      = form_tag execute_task_path(task), method: :post do
+
+        .modal-header
+          %span= task.name
+          - if task.description
+            %span.task-description.text-muted= task.description
+          - else
+            %span.task-description.text-muted= t('rakeman.tasks.empty_description')
+
+        - if task.params.any?
+          .modal-body
+            %p= t('rakeman.tasks.params')
+            - task.params.each do |parameter|
+              .modal--param-input
+                = label_tag "task_parameters[#{parameter.id}]", parameter.name.humanize
+                = text_field_tag "task_parameters[#{parameter.id}]"
+
+        .modal-footer
+          %button.btn.btn-secondary{type: 'reset', 'data-dismiss' => 'modal'}= t('rakeman.cancel')
+          = submit_tag t('rakeman.tasks.actions.execute'), class: 'btn btn-primary'

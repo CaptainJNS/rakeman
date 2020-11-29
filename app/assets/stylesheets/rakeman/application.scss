@@ -14,3 +14,13 @@
  *= require_tree .
  *= require_self
  */
+
+.rakeman-tasks-table {
+  td {
+    max-width: calc(30vw - 10px);
+  }
+
+  .modal-header {
+    flex-direction: column;
+  }
+}

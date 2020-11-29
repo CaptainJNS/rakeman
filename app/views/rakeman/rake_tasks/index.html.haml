@@ -1,19 +1,31 @@
-=link_to(t('rakeman.tasks.actions.update_list'), update_tasks_list_path)
-%table{border: 1}
-  %thead
-    %tr
-      - t('rakeman.tasks.columns').each_value do |column_name|
-        %td= column_name
-  %tbody
-    - @tasks.each do |task|
-      %tr
-        %td= task.name
-        %td= task.description
-        %td= task.done
-        %td
-          .table_actions
-            -if task.done?
-              = link_to(t('rakeman.tasks.actions.mark_as_undone'), mark_as_undone_path(task))
-            -else
-              = link_to(t('rakeman.tasks.actions.mark_as_done'), mark_as_done_path(task))
-              = link_to(t('rakeman.tasks.actions.execute'), execute_task_path(task))
+.container
+  .row
+    .col-sm-12
+      = link_to t('rakeman.tasks.actions.update_list'), update_tasks_list_path, class: 'btn btn-primary'
+  .row
+    .col-sm-12
+      %table.table.rakeman-tasks-table{border: 1}
+        %thead
+          %tr
+            - t('rakeman.tasks.columns').each_value do |column_name|
+              %td= column_name
+        %tbody
+          - @tasks.each do |task|
+            %tr
+              %td= task.name
+              %td= task.description
+              - if task.done
+                %td.bg-success.text-white.font-weight-bold= task.done
+              - else
+                %td.bg-danger.text-white.font-weight-bold= task.done
+              %td
+                .table_actions
+                  - if task.done?
+                    %div
+                      = link_to t('rakeman.tasks.actions.mark_as_undone'), mark_as_undone_path(task)
+                  - else
+                    %div
+                      = link_to t('rakeman.tasks.actions.mark_as_done'), mark_as_done_path(task)
+                      %button.btn.btn-primary.run-task-btn{type: 'button', 'data-toggle' => 'modal', 'data-target' => "#rake-tasks-modal-#{task.id}"}
+                        = t('rakeman.tasks.actions.execute')
+                      = render 'modal', task: task

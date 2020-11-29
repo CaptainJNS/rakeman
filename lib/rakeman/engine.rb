@@ -4,10 +4,10 @@ require 'rake'
 
 module Rakeman
   class Engine < ::Rails::Engine
-
     isolate_namespace Rakeman
 
     config.autoload_paths += [Rakeman::Engine.root.join('config', 'initializers')]
+    config.assets.paths << Rakeman::Engine.root.join('node_modules')
 
     config.generators do |g|
       g.test_framework :rspec, fixture: false

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Rakeman
-  module WEB
+  module Web
     module Tasks
       class Run
         extend Rakeman::Lib::Callable

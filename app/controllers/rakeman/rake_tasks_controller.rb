@@ -23,7 +23,7 @@ class Rakeman::RakeTasksController < ApplicationController
   end
 
   def execute
-    Rakeman::WEB::Tasks::Run.call(task, params, manager)
+    Rakeman::Web::Tasks::Run.call(task, params, manager)
 
     redirect t('rakeman.tasks.events.executed')
   end

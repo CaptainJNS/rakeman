@@ -16,3 +16,8 @@ en:
         marked_as_undone: Task has been marked as undone
         executed: Task has been successfully executed and marked as done
         list_updated: Tasks list has been updated
+      empty_description: No description provided
+      params: 'Parameters:'
+    task_parameters:
+      not_found: Requested task parameter(s) was not found
+    cancel: Cancel

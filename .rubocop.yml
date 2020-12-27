@@ -7,6 +7,7 @@ AllCops:
   Exclude:
     - 'bin/*'
     - 'spec/dummy/**/*'
+  TargetRubyVersion: 2.5
 
 Style/Documentation:
   Enabled: false
@@ -28,8 +29,14 @@ RSpec/FilePath:
 RSpec/MultipleMemoizedHelpers:
   Enabled: false
 
+RSpec/MultipleExpectations:
+  Enabled: false
+
 RSpec/ExampleLength:
   Enabled: false
 
 Rails/InverseOf:
+  Enabled: false
+
+Lint/MissingSuper:
   Enabled: false

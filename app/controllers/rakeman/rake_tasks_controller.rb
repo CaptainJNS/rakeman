@@ -6,32 +6,36 @@ class Rakeman::RakeTasksController < ApplicationController
   def index
     manager.persist_tasks unless Rakeman::RakeTask.any?
 
-    @tasks = Rakeman::RakeTask.order(:name)
+    @tasks = Rakeman::RakeTask.includes(:params).order(:name)
     render 'index', layout: 'layouts/rakeman/application.html.haml'
   end
 
   def mark_as_done
     manager.mark_as_done(task)
 
-    redirect t('rakeman.tasks.events.marked_as_done')
+    redirect_to index_path, notice: t('rakeman.tasks.events.marked_as_done')
   end
 
   def mark_as_undone
     manager.mark_as_undone(task)
 
-    redirect t('rakeman.tasks.events.marked_as_undone')
+    redirect_to index_path, notice: t('rakeman.tasks.events.marked_as_undone')
   end
 
   def execute
-    manager.execute(task)
+    result = Rakeman::Web::Tasks::Run.call(params)
 
-    redirect t('rakeman.tasks.events.executed')
+    if result.success?
+      redirect_to index_path, notice: t('rakeman.tasks.events.executed')
+    else
+      redirect_to index_path, alert: result.message
+    end
   end
 
   def update_tasks_list
     manager.update_tasks_list
 
-    redirect t('rakeman.tasks.events.list_updated')
+    redirect_to index_path, notice: t('rakeman.tasks.events.list_updated')
   end
 
   private
@@ -42,9 +46,5 @@ class Rakeman::RakeTasksController < ApplicationController
 
   def task
     @task ||= Rakeman::RakeTask.find_by(id: params[:id])
-  end
-
-  def redirect(message)
-    redirect_to index_path, notice: message
   end
 end

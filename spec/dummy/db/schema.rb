@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_14_134949) do
+ActiveRecord::Schema.define(version: 2020_11_29_193419) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 2020_11_14_134949) do
     t.bigint "rakeman_rake_task_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "parameter_position", default: 0
     t.index ["rakeman_rake_task_id"], name: "index_rakeman_task_parameters_on_rakeman_rake_task_id"
   end
 

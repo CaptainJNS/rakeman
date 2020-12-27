@@ -14,18 +14,16 @@
             %tr
               %td= task.name
               %td= task.description
-              - if task.done
-                %td.bg-success.text-white.font-weight-bold= task.done
-              - else
-                %td.bg-danger.text-white.font-weight-bold= task.done
+              %td.bg-success.text-white.font-weight-bold{class: task.done ? 'bg-success' : 'bg-danger'}
+                = task.done
               %td
                 .table_actions
                   - if task.done?
                     %div
-                      = link_to t('rakeman.tasks.actions.mark_as_undone'), mark_as_undone_path(task)
+                      = link_to t('rakeman.tasks.actions.mark_as_undone'), mark_as_undone_path(task), method: :put
                   - else
                     %div
-                      = link_to t('rakeman.tasks.actions.mark_as_done'), mark_as_done_path(task)
+                      = link_to t('rakeman.tasks.actions.mark_as_done'), mark_as_done_path(task), method: :put
                       %button.btn.btn-primary.run-task-btn{type: 'button', 'data-toggle' => 'modal', 'data-target' => "#rake-tasks-modal-#{task.id}"}
                         = t('rakeman.tasks.actions.execute')
                       = render 'modal', task: task

@@ -31,6 +31,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'capybara', '~> 3.32', '>= 3.32.1'
   spec.add_development_dependency 'factory_bot_rails', '~> 5.1', '>= 5.1.1'
   spec.add_development_dependency 'faker', '~> 2.11'
+  spec.add_development_dependency 'pry', '~> 0.13.1'
   spec.add_development_dependency 'pry-rails', '~> 0.3.9'
   spec.add_development_dependency 'rubocop', '~> 1.2'
   spec.add_development_dependency 'rubocop-rails', '~> 2.8', '>= 2.8.1'

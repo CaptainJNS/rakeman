@@ -37,3 +37,6 @@ RSpec/ExampleLength:
 
 Rails/InverseOf:
   Enabled: false
+
+Lint/MissingSuper:
+  Enabled: false

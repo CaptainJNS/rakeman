@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe Rakeman::Web::Tasks::Run, type: :service do
-  subject(:service) { described_class.new(task, params, manager) }
+  subject(:service) { described_class.new(params) }
 
   let(:task) { create(:rake_task) }
   let(:parameter) { create(:rakeman_task_parameter, task: task) }
@@ -10,12 +10,14 @@ RSpec.describe Rakeman::Web::Tasks::Run, type: :service do
   let(:parameter_value) { Faker::Number.number }
 
   before do
-    allow(manager).to receive(:execute).and_return(true)
+    service.instance_variable_set(:@manager, manager)
+    allow(manager).to receive(:execute)
   end
 
   describe 'success' do
     let(:params) do
       ActionController::Parameters.new(
+        id: task.id,
         task_parameters: {
           parameter.id.to_s => parameter_value
         }
@@ -25,7 +27,7 @@ RSpec.describe Rakeman::Web::Tasks::Run, type: :service do
     let(:expected_passed_parameters) { [parameter_value] }
 
     it 'executes task with a parameter' do
-      expect(service.call).to be_truthy
+      expect(service.call).to be_success
       expect(manager).to have_received(:execute).with(task, expected_passed_parameters)
     end
   end
@@ -33,14 +35,18 @@ RSpec.describe Rakeman::Web::Tasks::Run, type: :service do
   describe 'failure' do
     let(:params) do
       ActionController::Parameters.new(
+        id: task.id,
         task_parameters: {
           parameter.id.next.to_s => parameter_value
         }
       )
     end
 
-    it 'executes task with a parameter' do
-      expect(service.call).to be_falsey
+    let(:result) { service.call }
+
+    it 'does NOT execute task' do
+      expect(result).to be_failure
+      expect(result.message).to eq I18n.t('rakeman.task_parameters.not_found')
       expect(manager).not_to have_received(:execute)
     end
   end

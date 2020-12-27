@@ -18,4 +18,6 @@ en:
         list_updated: Tasks list has been updated
       empty_description: No description provided
       params: 'Parameters:'
+    task_parameters:
+      not_found: Requested task parameter(s) was not found
     cancel: Cancel

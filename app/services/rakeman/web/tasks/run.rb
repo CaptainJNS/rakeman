@@ -3,32 +3,37 @@
 module Rakeman
   module Web
     module Tasks
-      class Run
-        extend Rakeman::Lib::Callable
-
-        def initialize(task, params, manager)
-          @task = task
-          @params = params[:task_parameters].permit!.to_h
-          @manager = manager
+      class Run < ApplicationService
+        def initialize(params)
+          @task = Rakeman::RakeTask.find_by(id: params[:id])
+          @params = params.fetch(:task_parameters) { {} }.permit!.to_h
+          @manager = Rakeman::Manager.new
         end
 
         def call
-          return unless params_valid?
+          return validation_failure unless @task && needed_task_params?
 
-          passed_params = @task_parameters.sort(&:parameter_position).map do |param|
-            @params[param.id.to_s]
-          end
-
+          passed_params = task_parameters.map { |param| @params[param.id.to_s] }
           @manager.execute(@task, passed_params)
+          success!
+        rescue RuntimeError => e
+          failure!(message: e.message)
         end
 
         private
 
-        def params_valid?
-          task_parameter_ids = @params.keys
-          @task_parameters = @task.params.where(id: task_parameter_ids)
+        def task_parameters
+          @task_parameters ||= @task.params.find(@params.keys).sort_by(&:parameter_position)
+        rescue ActiveRecord::RecordNotFound
+          @task_parameters ||= []
+        end
 
-          @task_parameters.size == task_parameter_ids.size
+        def needed_task_params?
+          !@task.params.exists? || task_parameters.any?
+        end
+
+        def validation_failure
+          failure!(message: I18n.t('rakeman.task_parameters.not_found'))
         end
       end
     end
